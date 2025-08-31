@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football Predictions App</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0;
+    background: #f0f4f8;
+    color: #1f2937;
+  }
+
+  header {
+    background: linear-gradient(90deg,#2563eb,#1e40af);
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  header h1 { margin: 0; font-size: 2rem; }
+  header p { margin: 5px 0 0 0; font-size: 1rem; }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: #3b82f6;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  nav button {
+    margin: 5px;
+    padding: 10px 18px;
+    border: none;
+    background: white;
+    color: #1e40af;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  nav button:hover {
+    background: #1e40af;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  section {
+    display: none;
+    padding: 25px 20px;
+    max-width: 900px;
+    margin: auto;
+  }
+  section.active { display: block; }
+
+  .prediction-box {
+    background: white;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .prediction-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    color: #1e3a8a;
+    margin-bottom: 12px;
+  }
+
+  p { font-size: 1rem; line-height: 1.5; }
+
+  @media(max-width:600px) {
+    nav button { padding: 8px 14px; font-size: 0.9rem; }
+    header h1 { font-size: 1.6rem; }
+    header p { font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚽ Football Predictions</h1>
+  <p>Top European Leagues – Check weekly match scores!</p>
+</header>
+
+<nav>
+  <button onclick="showSection('home')">🏠 Home</button>
+  <button onclick="showSection('premier')">🇬🇧 Premier League</button>
+  <button onclick="showSection('laliga')">🇪🇸 La Liga</button>
+  <button onclick="showSection('seriea')">🇮🇹 Serie A</button>
+  <button onclick="showSection('bundesliga')">🇩🇪 Bundesliga</button>
+  <button onclick="showSection('ligue1')">🇫🇷 Ligue 1</button>
+</nav>
+
+<section id="home" class="active">
+  <h2>Welcome!</h2>
+  <p>Select a league above to see this week’s top predictions. Perfect for football fans and enthusiasts who want accurate scores before the matches start.</p>
+</section>
+
+<section id="premier">
+  <h2>Premier League Predictions</h2>
+  <div class="prediction-box"><strong>Arsenal vs Man United</strong><br>Prediction: 2 - 1</div>
+  <div class="prediction-box"><strong>Chelsea vs Liverpool</strong><br>Prediction: 1 - 1</div>
+</section>
+
+<section id="laliga">
+  <h2>La Liga Predictions</h2>
+  <div class="prediction-box"><strong>Barcelona vs Real Madrid</strong><br>Prediction: 2 - 2</div>
+  <div class="prediction-box"><strong>Atletico Madrid vs Sevilla</strong><br>Prediction: 1 - 0</div>
+</section>
+
+<section id="seriea">
+  <h2>Serie A Predictions</h2>
+  <div class="prediction-box"><strong>Juventus vs Inter</strong><br>Prediction: 1 - 1</div>
+  <div class="prediction-box"><strong>AC Milan vs Napoli</strong><br>Prediction: 2 - 1</div>
+</section>
+
+<section id="bundesliga">
+  <h2>Bundesliga Predictions</h2>
+  <div class="prediction-box"><strong>Bayern Munich vs Dortmund</strong><br>Prediction: 3 - 2</div>
+  <div class="prediction-box"><strong>RB Leipzig vs Leverkusen</strong><br>Prediction: 2 - 1</div>
+</section>
+
+<section id="ligue1">
+  <h2>Ligue 1 Predictions</h2>
+  <div class="prediction-box"><strong>PSG vs Lyon</strong><br>Prediction: 2 - 0</div>
+  <div class="prediction-box"><strong>Marseille vs Monaco</strong><br>Prediction: 1 - 1</div>
+</section>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+// Load section from hash if present
+window.addEventListener("load", () => {
+  const hash = location.hash.replace("#","");
+  if(hash && document.getElementById(hash)) showSection(hash);
+});
+</script>
+
+</body>
+</html>
