@@ -7,35 +7,46 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f7fa;
+      background: #f4f6f9;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      text-align: center;
     }
     h1 {
-      text-align: center;
-      margin-bottom: 30px;
+      background: #007bff;
+      color: white;
+      padding: 15px;
+      margin: 0 0 20px;
     }
     .league {
-      margin-bottom: 40px;
-      padding: 20px;
-      background: #fff;
+      margin: 20px auto;
+      padding: 15px;
+      width: 90%;
+      max-width: 700px;
+      background: white;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+    .league h2 {
+      margin-bottom: 15px;
+      color: #007bff;
+    }
     .match {
+      display: flex;
+      justify-content: space-between;
       padding: 10px;
-      border-bottom: 1px solid #ddd;
+      margin: 8px 0;
+      border-bottom: 1px solid #eee;
     }
     .match:last-child {
       border-bottom: none;
     }
     .teams {
-      font-size: 16px;
       font-weight: bold;
     }
-    .details {
-      font-size: 14px;
-      color: #555;
+    .datetime {
+      font-size: 0.9em;
+      color: #666;
     }
   </style>
 </head>
@@ -46,78 +57,80 @@
   <script>
     const leagues = {
       "Premier League": [
-        { home: "Arsenal", away: "Chelsea", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "16:00" },
-        { home: "Liverpool", away: "Manchester United", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "18:30" },
-        { home: "Manchester City", away: "Tottenham", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "14:00" },
-        { home: "Newcastle", away: "Aston Villa", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "16:30" },
-        { home: "West Ham", away: "Everton", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "20:00" },
-        { home: "Leicester", away: "Crystal Palace", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
-        { home: "Wolves", away: "Brighton", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
-        { home: "Southampton", away: "Fulham", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "13:00" },
-        { home: "Brentford", away: "Nottingham Forest", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "14:00" },
-        { home: "Bournemouth", away: "Sheffield United", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "16:30" }
+        { home: "Arsenal", away: "Chelsea", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "18:00" },
+        { home: "Liverpool", away: "Man City", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "20:00" },
+        { home: "Everton", away: "Tottenham", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "16:00" },
+        { home: "Leeds", away: "Aston Villa", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "18:30" },
+        { home: "Newcastle", away: "West Ham", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "14:00" },
+        { home: "Southampton", away: "Wolves", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "16:00" },
+        { home: "Brighton", away: "Fulham", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "18:00" },
+        { home: "Brentford", away: "Crystal Palace", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "12:30" },
+        { home: "Nottingham", away: "Bournemouth", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
+        { home: "Man United", away: "Leicester", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" }
       ],
       "La Liga": [
-        { home: "Barcelona", away: "Real Madrid", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "20:00" },
-        { home: "Atletico Madrid", away: "Sevilla", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "18:15" },
-        { home: "Valencia", away: "Real Betis", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "16:30" },
-        { home: "Villarreal", away: "Athletic Bilbao", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "14:00" },
-        { home: "Real Sociedad", away: "Celta Vigo", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "22:00" },
-        { home: "Getafe", away: "Rayo Vallecano", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "13:00" },
-        { home: "Osasuna", away: "Mallorca", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "12:00" },
-        { home: "Granada", away: "Alaves", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:15" },
-        { home: "Las Palmas", away: "Espanyol", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "19:00" },
-        { home: "Cadiz", away: "Leganes", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "21:00" }
+        { home: "Real Madrid", away: "Barcelona", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "20:00" },
+        { home: "Atletico", away: "Sevilla", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "19:00" },
+        { home: "Valencia", away: "Villarreal", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "21:00" },
+        { home: "Real Betis", away: "Athletic Bilbao", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "17:00" },
+        { home: "Sociedad", away: "Celta Vigo", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "19:00" },
+        { home: "Mallorca", away: "Granada", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "13:00" },
+        { home: "Getafe", away: "Alaves", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:15" },
+        { home: "Osasuna", away: "Espanyol", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" },
+        { home: "Cadiz", away: "Rayo Vallecano", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:45" },
+        { home: "Las Palmas", away: "Leganes", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "21:30" }
       ],
       "Serie A": [
-        { home: "Juventus", away: "AC Milan", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "20:45" },
-        { home: "Inter Milan", away: "Napoli", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "18:00" },
-        { home: "Roma", away: "Lazio", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "20:45" },
-        { home: "Atalanta", away: "Torino", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:00" },
-        { home: "Fiorentina", away: "Bologna", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "18:30" },
-        { home: "Sassuolo", away: "Genoa", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
-        { home: "Cagliari", away: "Lecce", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "12:30" },
-        { home: "Verona", away: "Monza", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:00" },
-        { home: "Empoli", away: "Udinese", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "19:30" },
-        { home: "Salernitana", away: "Frosinone", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "21:45" }
+        { home: "Juventus", away: "Inter Milan", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "20:45" },
+        { home: "AC Milan", away: "Napoli", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "18:00" },
+        { home: "Roma", away: "Lazio", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "20:45" },
+        { home: "Atalanta", away: "Fiorentina", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "19:30" },
+        { home: "Torino", away: "Sampdoria", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "21:45" },
+        { home: "Bologna", away: "Udinese", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
+        { home: "Sassuolo", away: "Empoli", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" },
+        { home: "Verona", away: "Monza", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:45" },
+        { home: "Genoa", away: "Salernitana", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "21:45" },
+        { home: "Cagliari", away: "Lecce", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "12:30" }
       ],
       "Bundesliga": [
-        { home: "Bayern Munich", away: "Borussia Dortmund", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "18:30" },
-        { home: "RB Leipzig", away: "Bayer Leverkusen", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:30" },
-        { home: "Borussia Monchengladbach", away: "Eintracht Frankfurt", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:30" },
-        { home: "VfB Stuttgart", away: "Union Berlin", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "17:30" },
-        { home: "SC Freiburg", away: "Mainz", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:30" },
-        { home: "Wolfsburg", away: "Augsburg", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:30" },
-        { home: "Hoffenheim", away: "Werder Bremen", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "13:30" },
-        { home: "Heidenheim", away: "Bochum", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "19:30" },
-        { home: "Köln", away: "Darmstadt", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "21:30" }
+        { home: "Bayern Munich", away: "Borussia Dortmund", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "18:30" },
+        { home: "Leipzig", away: "Leverkusen", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "20:30" },
+        { home: "Schalke", away: "Hamburg", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "15:30" },
+        { home: "Frankfurt", away: "Hoffenheim", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "17:30" },
+        { home: "Stuttgart", away: "Freiburg", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "19:30" },
+        { home: "Mainz", away: "Cologne", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "13:30" },
+        { home: "Augsburg", away: "Union Berlin", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:30" },
+        { home: "Werder Bremen", away: "Gladbach", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" },
+        { home: "Wolfsburg", away: "Hertha Berlin", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:30" },
+        { home: "Bochum", away: "Darmstadt", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "16:30" }
       ],
       "Ligue 1": [
-        { home: "PSG", away: "Marseille", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "21:00" },
-        { home: "Monaco", away: "Lyon", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "20:45" },
-        { home: "Lille", away: "Nice", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "18:00" },
-        { home: "Rennes", away: "Lens", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "15:00" },
-        { home: "Nantes", away: "Reims", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "17:00" },
-        { home: "Strasbourg", away: "Toulouse", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:00" },
-        { home: "Montpellier", away: "Brest", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "13:00" },
-        { home: "Le Havre", away: "Metz", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:00" },
-        { home: "Angers", away: "Clermont", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "19:00" }
+        { home: "PSG", away: "Marseille", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "21:00" },
+        { home: "Lyon", away: "Monaco", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "19:00" },
+        { home: "Lille", away: "Nice", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "21:00" },
+        { home: "Rennes", away: "Brest", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "17:00" },
+        { home: "Lens", away: "Nantes", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "19:00" },
+        { home: "Toulouse", away: "Strasbourg", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "13:00" },
+        { home: "Reims", away: "Montpellier", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:15" },
+        { home: "Clermont", away: "Angers", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" },
+        { home: "Metz", away: "Troyes", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:45" },
+        { home: "Saint-Etienne", away: "Lorient", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "21:30" }
       ]
     };
 
-    // Rendering
     const app = document.getElementById("app");
+
     for (const league in leagues) {
       const leagueDiv = document.createElement("div");
-      leagueDiv.classList.add("league");
+      leagueDiv.className = "league";
       leagueDiv.innerHTML = `<h2>${league}</h2>`;
-
+      
       leagues[league].forEach(match => {
         const matchDiv = document.createElement("div");
-        matchDiv.classList.add("match");
+        matchDiv.className = "match";
         matchDiv.innerHTML = `
           <div class="teams">${match.home} ${match.homeScore} - ${match.awayScore} ${match.away}</div>
-          <div class="details">${match.date} | ${match.time}</div>
+          <div class="datetime">${match.date} | ${match.time}</div>
         `;
         leagueDiv.appendChild(matchDiv);
       });
