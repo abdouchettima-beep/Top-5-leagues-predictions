@@ -3,140 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Football Predictions App</title>
+  <title>Football Predictions</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f6f9;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background: #f4f4f9;
+      color: #333;
+    }
+    header {
+      background: #222;
+      color: #fff;
+      padding: 20px;
       text-align: center;
     }
     h1 {
-      background: #007bff;
-      color: white;
-      padding: 15px;
-      margin: 0 0 20px;
+      margin: 0;
     }
-    .league {
-      margin: 20px auto;
-      padding: 15px;
-      width: 90%;
-      max-width: 700px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    section {
+      margin: 20px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .league h2 {
-      margin-bottom: 15px;
-      color: #007bff;
+    h2 {
+      margin-top: 0;
+      color: #444;
     }
-    .match {
-      display: flex;
-      justify-content: space-between;
+    .prediction-box {
+      border: 1px solid #ddd;
+      margin: 10px 0;
       padding: 10px;
-      margin: 8px 0;
-      border-bottom: 1px solid #eee;
-    }
-    .match:last-child {
-      border-bottom: none;
-    }
-    .teams {
-      font-weight: bold;
-    }
-    .datetime {
-      font-size: 0.9em;
-      color: #666;
+      border-radius: 6px;
+      background: #fafafa;
     }
   </style>
 </head>
 <body>
-  <h1>Football Predictions</h1>
-  <div id="app"></div>
+  <header>
+    <h1>Football Predictions</h1>
+  </header>
+
+  <!-- League sections -->
+  <section id="premier"><h2>Premier League</h2></section>
+  <section id="laliga"><h2>La Liga</h2></section>
+  <section id="seriea"><h2>Serie A</h2></section>
+  <section id="bundesliga"><h2>Bundesliga</h2></section>
+  <section id="ligue1"><h2>Ligue 1</h2></section>
 
   <script>
-    const leagues = {
-      "Premier League": [
-        { home: "Arsenal", away: "Chelsea", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "18:00" },
-        { home: "Liverpool", away: "Man City", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "20:00" },
-        { home: "Everton", away: "Tottenham", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "16:00" },
-        { home: "Leeds", away: "Aston Villa", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "18:30" },
-        { home: "Newcastle", away: "West Ham", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "14:00" },
-        { home: "Southampton", away: "Wolves", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "16:00" },
-        { home: "Brighton", away: "Fulham", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "18:00" },
-        { home: "Brentford", away: "Crystal Palace", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "12:30" },
-        { home: "Nottingham", away: "Bournemouth", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
-        { home: "Man United", away: "Leicester", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" }
+    // Matches stored in a JavaScript array
+    const matches = {
+      premier: [
+        { teams: "Arsenal vs Man United", prediction: "2 - 1" },
+        { teams: "Chelsea vs Liverpool", prediction: "1 - 1" },
+        { teams: "Man City vs Tottenham", prediction: "3 - 1" },
+        { teams: "Newcastle vs West Ham", prediction: "2 - 0" },
+        { teams: "Brighton vs Aston Villa", prediction: "1 - 2" },
+        { teams: "Everton vs Fulham", prediction: "1 - 0" },
+        { teams: "Wolves vs Leicester", prediction: "2 - 2" },
+        { teams: "Crystal Palace vs Brentford", prediction: "1 - 1" },
+        { teams: "Bournemouth vs Nottingham", prediction: "0 - 1" },
+        { teams: "Leeds vs Southampton", prediction: "2 - 0" }
       ],
-      "La Liga": [
-        { home: "Real Madrid", away: "Barcelona", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "20:00" },
-        { home: "Atletico", away: "Sevilla", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "19:00" },
-        { home: "Valencia", away: "Villarreal", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "21:00" },
-        { home: "Real Betis", away: "Athletic Bilbao", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "17:00" },
-        { home: "Sociedad", away: "Celta Vigo", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "19:00" },
-        { home: "Mallorca", away: "Granada", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "13:00" },
-        { home: "Getafe", away: "Alaves", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:15" },
-        { home: "Osasuna", away: "Espanyol", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" },
-        { home: "Cadiz", away: "Rayo Vallecano", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:45" },
-        { home: "Las Palmas", away: "Leganes", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "21:30" }
+      laliga: [
+        { teams: "Barcelona vs Real Madrid", prediction: "2 - 2" },
+        { teams: "Atletico Madrid vs Sevilla", prediction: "1 - 0" },
+        { teams: "Valencia vs Villarreal", prediction: "1 - 1" },
+        { teams: "Real Betis vs Real Sociedad", prediction: "2 - 1" },
+        { teams: "Athletic Bilbao vs Mallorca", prediction: "1 - 0" },
+        { teams: "Osasuna vs Getafe", prediction: "0 - 0" },
+        { teams: "Granada vs Alaves", prediction: "2 - 1" },
+        { teams: "Celta Vigo vs Cadiz", prediction: "1 - 1" },
+        { teams: "Rayo Vallecano vs Las Palmas", prediction: "2 - 0" },
+        { teams: "Espanyol vs Girona", prediction: "1 - 2" }
       ],
-      "Serie A": [
-        { home: "Juventus", away: "Inter Milan", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "20:45" },
-        { home: "AC Milan", away: "Napoli", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "18:00" },
-        { home: "Roma", away: "Lazio", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "20:45" },
-        { home: "Atalanta", away: "Fiorentina", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "19:30" },
-        { home: "Torino", away: "Sampdoria", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "21:45" },
-        { home: "Bologna", away: "Udinese", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
-        { home: "Sassuolo", away: "Empoli", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" },
-        { home: "Verona", away: "Monza", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:45" },
-        { home: "Genoa", away: "Salernitana", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "21:45" },
-        { home: "Cagliari", away: "Lecce", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "12:30" }
+      seriea: [
+        { teams: "Juventus vs Inter", prediction: "1 - 1" },
+        { teams: "AC Milan vs Napoli", prediction: "2 - 1" },
+        { teams: "Roma vs Lazio", prediction: "1 - 0" },
+        { teams: "Atalanta vs Fiorentina", prediction: "2 - 2" },
+        { teams: "Torino vs Bologna", prediction: "0 - 1" },
+        { teams: "Sassuolo vs Udinese", prediction: "1 - 1" },
+        { teams: "Empoli vs Lecce", prediction: "1 - 0" },
+        { teams: "Sampdoria vs Verona", prediction: "2 - 1" },
+        { teams: "Salernitana vs Monza", prediction: "0 - 0" },
+        { teams: "Cagliari vs Genoa", prediction: "1 - 2" }
       ],
-      "Bundesliga": [
-        { home: "Bayern Munich", away: "Borussia Dortmund", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "18:30" },
-        { home: "Leipzig", away: "Leverkusen", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "20:30" },
-        { home: "Schalke", away: "Hamburg", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "15:30" },
-        { home: "Frankfurt", away: "Hoffenheim", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "17:30" },
-        { home: "Stuttgart", away: "Freiburg", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "19:30" },
-        { home: "Mainz", away: "Cologne", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "13:30" },
-        { home: "Augsburg", away: "Union Berlin", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:30" },
-        { home: "Werder Bremen", away: "Gladbach", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" },
-        { home: "Wolfsburg", away: "Hertha Berlin", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:30" },
-        { home: "Bochum", away: "Darmstadt", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "16:30" }
+      bundesliga: [
+        { teams: "Bayern Munich vs Dortmund", prediction: "3 - 2" },
+        { teams: "RB Leipzig vs Leverkusen", prediction: "2 - 1" },
+        { teams: "Frankfurt vs Stuttgart", prediction: "1 - 1" },
+        { teams: "Union Berlin vs Freiburg", prediction: "2 - 0" },
+        { teams: "Wolfsburg vs Mainz", prediction: "1 - 0" },
+        { teams: "Hoffenheim vs Augsburg", prediction: "2 - 2" },
+        { teams: "Cologne vs Hertha Berlin", prediction: "1 - 1" },
+        { teams: "Werder Bremen vs Schalke", prediction: "2 - 0" },
+        { teams: "Bochum vs Heidenheim", prediction: "0 - 1" }
       ],
-      "Ligue 1": [
-        { home: "PSG", away: "Marseille", homeScore: 0, awayScore: 0, date: "2025-09-03", time: "21:00" },
-        { home: "Lyon", away: "Monaco", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "19:00" },
-        { home: "Lille", away: "Nice", homeScore: 0, awayScore: 0, date: "2025-09-04", time: "21:00" },
-        { home: "Rennes", away: "Brest", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "17:00" },
-        { home: "Lens", away: "Nantes", homeScore: 0, awayScore: 0, date: "2025-09-05", time: "19:00" },
-        { home: "Toulouse", away: "Strasbourg", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "13:00" },
-        { home: "Reims", away: "Montpellier", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:15" },
-        { home: "Clermont", away: "Angers", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "17:30" },
-        { home: "Metz", away: "Troyes", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:45" },
-        { home: "Saint-Etienne", away: "Lorient", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "21:30" }
+      ligue1: [
+        { teams: "PSG vs Lyon", prediction: "2 - 0" },
+        { teams: "Marseille vs Monaco", prediction: "1 - 1" },
+        { teams: "Lille vs Rennes", prediction: "2 - 1" },
+        { teams: "Nice vs Nantes", prediction: "1 - 0" },
+        { teams: "Strasbourg vs Toulouse", prediction: "0 - 0" },
+        { teams: "Montpellier vs Brest", prediction: "2 - 2" },
+        { teams: "Reims vs Clermont", prediction: "1 - 0" },
+        { teams: "Lens vs Lorient", prediction: "2 - 1" },
+        { teams: "Metz vs Angers", prediction: "1 - 1" }
       ]
     };
 
-    const app = document.getElementById("app");
+    // Function to load matches dynamically
+    function loadMatches(leagueId) {
+      const container = document.getElementById(leagueId);
+      const title = container.querySelector("h2").outerHTML;
+      container.innerHTML = title; // Reset with league title only
 
-    for (const league in leagues) {
-      const leagueDiv = document.createElement("div");
-      leagueDiv.className = "league";
-      leagueDiv.innerHTML = `<h2>${league}</h2>`;
-      
-      leagues[league].forEach(match => {
-        const matchDiv = document.createElement("div");
-        matchDiv.className = "match";
-        matchDiv.innerHTML = `
-          <div class="teams">${match.home} ${match.homeScore} - ${match.awayScore} ${match.away}</div>
-          <div class="datetime">${match.date} | ${match.time}</div>
+      matches[leagueId].forEach(match => {
+        container.innerHTML += `
+          <div class="prediction-box">
+            <strong>${match.teams}</strong><br>
+            Prediction: ${match.prediction}
+          </div>
         `;
-        leagueDiv.appendChild(matchDiv);
       });
-
-      app.appendChild(leagueDiv);
     }
+
+    // Load all leagues when page starts
+    window.addEventListener("load", () => {
+      Object.keys(matches).forEach(league => loadMatches(league));
+    });
   </script>
 </body>
 </html>
