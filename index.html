@@ -1,196 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Football Predictions App</title>
-<style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0; padding: 0;
-    background: #f0f4f8;
-    color: #1f2937;
-  }
-  header {
-    background: linear-gradient(90deg,#2563eb,#1e40af);
-    color: white;
-    padding: 25px 20px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-  header h1 { margin: 0; font-size: 2rem; }
-  header p { margin: 5px 0 0 0; font-size: 1rem; }
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    background: #3b82f6;
-    padding: 10px 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  nav button {
-    margin: 5px;
-    padding: 10px 18px;
-    border: none;
-    background: white;
-    color: #1e40af;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  nav button:hover {
-    background: #1e40af;
-    color: white;
-    transform: translateY(-2px);
-  }
-  section {
-    display: none;
-    padding: 25px 20px;
-    max-width: 900px;
-    margin: auto;
-  }
-  section.active { display: block; }
-  .prediction-box {
-    background: white;
-    padding: 18px;
-    margin: 12px 0;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .prediction-box:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-  }
-  h2 { color: #1e3a8a; margin-bottom: 12px; }
-  p { font-size: 1rem; line-height: 1.5; }
-  @media(max-width:600px) {
-    nav button { padding: 8px 14px; font-size: 0.9rem; }
-    header h1 { font-size: 1.6rem; }
-    header p { font-size: 0.9rem; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Football Predictions App</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .league {
+      margin-bottom: 40px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .match {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .match:last-child {
+      border-bottom: none;
+    }
+    .teams {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .details {
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
+  <h1>Football Predictions</h1>
+  <div id="app"></div>
 
-<header>
-  <h1>⚽ Football Predictions</h1>
-  <p>Top European Leagues – Check weekly match scores!</p>
-</header>
+  <script>
+    const leagues = {
+      "Premier League": [
+        { home: "Arsenal", away: "Chelsea", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "16:00" },
+        { home: "Liverpool", away: "Manchester United", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "18:30" },
+        { home: "Manchester City", away: "Tottenham", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "14:00" },
+        { home: "Newcastle", away: "Aston Villa", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "16:30" },
+        { home: "West Ham", away: "Everton", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "20:00" },
+        { home: "Leicester", away: "Crystal Palace", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
+        { home: "Wolves", away: "Brighton", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
+        { home: "Southampton", away: "Fulham", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "13:00" },
+        { home: "Brentford", away: "Nottingham Forest", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "14:00" },
+        { home: "Bournemouth", away: "Sheffield United", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "16:30" }
+      ],
+      "La Liga": [
+        { home: "Barcelona", away: "Real Madrid", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "20:00" },
+        { home: "Atletico Madrid", away: "Sevilla", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "18:15" },
+        { home: "Valencia", away: "Real Betis", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "16:30" },
+        { home: "Villarreal", away: "Athletic Bilbao", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "14:00" },
+        { home: "Real Sociedad", away: "Celta Vigo", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "22:00" },
+        { home: "Getafe", away: "Rayo Vallecano", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "13:00" },
+        { home: "Osasuna", away: "Mallorca", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "12:00" },
+        { home: "Granada", away: "Alaves", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:15" },
+        { home: "Las Palmas", away: "Espanyol", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "19:00" },
+        { home: "Cadiz", away: "Leganes", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "21:00" }
+      ],
+      "Serie A": [
+        { home: "Juventus", away: "AC Milan", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "20:45" },
+        { home: "Inter Milan", away: "Napoli", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "18:00" },
+        { home: "Roma", away: "Lazio", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "20:45" },
+        { home: "Atalanta", away: "Torino", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:00" },
+        { home: "Fiorentina", away: "Bologna", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "18:30" },
+        { home: "Sassuolo", away: "Genoa", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:00" },
+        { home: "Cagliari", away: "Lecce", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "12:30" },
+        { home: "Verona", away: "Monza", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:00" },
+        { home: "Empoli", away: "Udinese", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "19:30" },
+        { home: "Salernitana", away: "Frosinone", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "21:45" }
+      ],
+      "Bundesliga": [
+        { home: "Bayern Munich", away: "Borussia Dortmund", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "18:30" },
+        { home: "RB Leipzig", away: "Bayer Leverkusen", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:30" },
+        { home: "Borussia Monchengladbach", away: "Eintracht Frankfurt", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:30" },
+        { home: "VfB Stuttgart", away: "Union Berlin", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "17:30" },
+        { home: "SC Freiburg", away: "Mainz", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:30" },
+        { home: "Wolfsburg", away: "Augsburg", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "15:30" },
+        { home: "Hoffenheim", away: "Werder Bremen", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "13:30" },
+        { home: "Heidenheim", away: "Bochum", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "19:30" },
+        { home: "Köln", away: "Darmstadt", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "21:30" }
+      ],
+      "Ligue 1": [
+        { home: "PSG", away: "Marseille", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "21:00" },
+        { home: "Monaco", away: "Lyon", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "20:45" },
+        { home: "Lille", away: "Nice", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "18:00" },
+        { home: "Rennes", away: "Lens", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "15:00" },
+        { home: "Nantes", away: "Reims", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "17:00" },
+        { home: "Strasbourg", away: "Toulouse", homeScore: 0, awayScore: 0, date: "2025-09-06", time: "19:00" },
+        { home: "Montpellier", away: "Brest", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "13:00" },
+        { home: "Le Havre", away: "Metz", homeScore: 0, awayScore: 0, date: "2025-09-07", time: "15:00" },
+        { home: "Angers", away: "Clermont", homeScore: 0, awayScore: 0, date: "2025-09-08", time: "19:00" }
+      ]
+    };
 
-<nav>
-  <button onclick="showSection('home')">🏠 Home</button>
-  <button onclick="showSection('premier')">🇬🇧 Premier League</button>
-  <button onclick="showSection('laliga')">🇪🇸 La Liga</button>
-  <button onclick="showSection('seriea')">🇮🇹 Serie A</button>
-  <button onclick="showSection('bundesliga')">🇩🇪 Bundesliga</button>
-  <button onclick="showSection('ligue1')">🇫🇷 Ligue 1</button>
-</nav>
+    // Rendering
+    const app = document.getElementById("app");
+    for (const league in leagues) {
+      const leagueDiv = document.createElement("div");
+      leagueDiv.classList.add("league");
+      leagueDiv.innerHTML = `<h2>${league}</h2>`;
 
-<section id="home" class="active">
-  <h2>Welcome!</h2>
-  <p>Select a league above to see this week’s top predictions. Perfect for football fans and enthusiasts who want accurate scores before the matches start.</p>
-</section>
+      leagues[league].forEach(match => {
+        const matchDiv = document.createElement("div");
+        matchDiv.classList.add("match");
+        matchDiv.innerHTML = `
+          <div class="teams">${match.home} ${match.homeScore} - ${match.awayScore} ${match.away}</div>
+          <div class="details">${match.date} | ${match.time}</div>
+        `;
+        leagueDiv.appendChild(matchDiv);
+      });
 
-<section id="premier"><h2>Premier League Predictions</h2><div id="premier-matches"></div></section>
-<section id="laliga"><h2>La Liga Predictions</h2><div id="laliga-matches"></div></section>
-<section id="seriea"><h2>Serie A Predictions</h2><div id="seriea-matches"></div></section>
-<section id="bundesliga"><h2>Bundesliga Predictions</h2><div id="bundesliga-matches"></div></section>
-<section id="ligue1"><h2>Ligue 1 Predictions</h2><div id="ligue1-matches"></div></section>
-
-<script>
-function showSection(id) {
-  document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
-
-// Matches stored in arrays – each league with 10 slots
-const matches = {
-  premier: [
-    { home: "Arsenal", away: "Man United", score: "2 - 1" },
-    { home: "Chelsea", away: "Liverpool", score: "1 - 1" },
-    { home: "Tottenham", away: "Newcastle", score: "2 - 0" },
-    { home: "West Ham", away: "Brighton", score: "1 - 2" },
-    { home: "Aston Villa", away: "Everton", score: "0 - 0" },
-    { home: "Leicester", away: "Wolves", score: "1 - 3" },
-    { home: "Crystal Palace", away: "Fulham", score: "2 - 2" },
-    { home: "Brentford", away: "Burnley", score: "1 - 0" },
-    { home: "Southampton", away: "Leeds", score: "2 - 1" },
-    { home: "Nottingham Forest", away: "Sheffield Utd", score: "0 - 2" }
-  ],
-  laliga: [
-    { home: "Barcelona", away: "Real Madrid", score: "2 - 2" },
-    { home: "Atletico Madrid", away: "Sevilla", score: "1 - 0" },
-    { home: "Valencia", away: "Real Sociedad", score: "1 - 1" },
-    { home: "Villarreal", away: "Athletic Club", score: "2 - 1" },
-    { home: "Betis", away: "Osasuna", score: "1 - 2" },
-    { home: "Celta Vigo", away: "Getafe", score: "0 - 0" },
-    { home: "Granada", away: "Mallorca", score: "2 - 0" },
-    { home: "Cadiz", away: "Rayo Vallecano", score: "1 - 3" },
-    { home: "Alaves", away: "Girona", score: "2 - 2" },
-    { home: "Las Palmas", away: "Espanyol", score: "0 - 1" }
-  ],
-  seriea: [
-    { home: "Juventus", away: "Inter", score: "1 - 1" },
-    { home: "AC Milan", away: "Napoli", score: "2 - 1" },
-    { home: "Roma", away: "Lazio", score: "1 - 0" },
-    { home: "Fiorentina", away: "Torino", score: "0 - 0" },
-    { home: "Atalanta", away: "Sassuolo", score: "3 - 2" },
-    { home: "Udinese", away: "Bologna", score: "1 - 2" },
-    { home: "Sampdoria", away: "Cagliari", score: "2 - 1" },
-    { home: "Empoli", away: "Verona", score: "0 - 1" },
-    { home: "Parma", away: "Genoa", score: "2 - 2" },
-    { home: "Salernitana", away: "Monza", score: "1 - 0" }
-  ],
-  bundesliga: [
-    { home: "Bayern Munich", away: "Dortmund", score: "3 - 2" },
-    { home: "RB Leipzig", away: "Leverkusen", score: "2 - 1" },
-    { home: "Schalke", away: "Frankfurt", score: "0 - 0" },
-    { home: "Stuttgart", away: "Mainz", score: "2 - 1" },
-    { home: "Hoffenheim", away: "Freiburg", score: "1 - 3" },
-    { home: "Union Berlin", away: "Augsburg", score: "2 - 2" },
-    { home: "Koln", away: "Bochum", score: "0 - 1" },
-    { home: "Hamburg", away: "Werder Bremen", score: "3 - 0" },
-    { home: "Hannover", away: "Kaiserslautern", score: "1 - 2" },
-    { home: "Hertha Berlin", away: "Nurnberg", score: "2 - 1" }
-  ],
-  ligue1: [
-    { home: "PSG", away: "Lyon", score: "2 - 0" },
-    { home: "Marseille", away: "Monaco", score: "1 - 1" },
-    { home: "Nice", away: "Lens", score: "0 - 0" },
-    { home: "Rennes", away: "Nantes", score: "2 - 1" },
-    { home: "Lille", away: "Toulouse", score: "1 - 2" },
-    { home: "Reims", away: "Strasbourg", score: "2 - 0" },
-    { home: "Brest", away: "Clermont", score: "1 - 1" },
-    { home: "Metz", away: "Montpellier", score: "0 - 3" },
-    { home: "Angers", away: "Lorient", score: "2 - 2" },
-    { home: "Ajaccio", away: "Auxerre", score: "1 - 0" }
-  ]
-};
-
-// Function to display matches
-function displayMatches() {
-  for (let league in matches) {
-    let container = document.getElementById(league + "-matches");
-    container.innerHTML = "";
-    matches[league].forEach(m => {
-      container.innerHTML += `
-        <div class="prediction-box">
-          <strong>${m.home} vs ${m.away}</strong><br>
-          Prediction: ${m.score}
-        </div>`;
-    });
-  }
-}
-
-window.onload = () => {
-  displayMatches();
-  const hash = location.hash.replace("#","");
-  if(hash && document.getElementById(hash)) showSection(hash);
-};
-</script>
-
+      app.appendChild(leagueDiv);
+    }
+  </script>
 </body>
 </html>
